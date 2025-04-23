@@ -19,8 +19,6 @@ Mini Async Runtime is a lightweight and minimal implementation of an asynchronou
   - `funtions.rs`: Helper functions like `spawn`, `sleep`, and `yield_now`.
   - `main.rs`: Example usage of the runtime.
 - `minimal-async-macros/`: Contains procedural macros for extending runtime functionality.
-- `Dockerfile`: Docker configuration for building and running the project.
-- `.github/workflows/`: GitHub Actions workflow for building and pushing Docker images.
 
 ## Usage
 
