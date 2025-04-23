@@ -24,10 +24,24 @@ Mini Async Runtime is a lightweight and minimal implementation of an asynchronou
 
 ## Usage
 
-### Running the Example
+### Running locally
 
 To run the example tasks defined in `src/main.rs`, use the following command:
 
 ```sh
 cargo run
+```
+
+### Running in a Docker Container
+
+You can also run the project using the pre-built Docker image available on GitHub Container Registry (GHCR).
+
+```sh
+docker pull ghcr.io/micheal-ndoh/mini-async-runtime:slim
+```
+
+Run the container:
+
+```sh
+docker run --rm ghcr.io/micheal-ndoh/mini-async-runtime:slim
 ```
