@@ -8,6 +8,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  REPO_OWNER: ${{ github.repository_owner }}
+  REPO_NAME: ${{ github.event.repository.name }}
 
 jobs:
   build-and-push:
@@ -27,15 +29,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}:latest .
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+      - name: Slim Docker image
+        uses: kitabisa/docker-slim-action@v1
+        env:
+          DSLIM_HTTP_PROBE: "false"
         with:
-          context: .
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          target: ghcr.io/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}:latest
+          tag: slim
+
+      - name: Push slimmed Docker image
+        run: |
+          docker push ghcr.io/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}:slim
